@@ -1,47 +1,42 @@
-import { FORM_FIELDS, FORM_FIELDS_LABELS } from "./constants";
+import { useForm } from "react-hook-form";
+import {
+  FORM_FIELDS,
+  FORM_FIELDS_LABELS,
+  FORM_INITIAL_VALUES,
+} from "./constants";
+import { FormValues } from "./types";
+import { InputField } from "components/input-field";
 
 function Form(): JSX.Element {
+  const { control } = useForm<FormValues>({
+    defaultValues: FORM_INITIAL_VALUES,
+  });
+
   return (
     <form className="col s12">
-      <div className="row">
-        <div className="input-field col s6">
-          <label htmlFor={FORM_FIELDS.first_name} className="active">
-            {FORM_FIELDS_LABELS.first_name}
-          </label>
-          <input id={FORM_FIELDS.first_name} type="text" className="validate" />
-        </div>
-        <div className="input-field col s6"></div>
-      </div>
+      <InputField
+        name={FORM_FIELDS.first_name}
+        label={FORM_FIELDS_LABELS.first_name}
+        control={control}
+      />
 
-      <div className="row">
-        <div className="input-field col s6">
-          <label htmlFor={FORM_FIELDS.last_name} className="active">
-            {FORM_FIELDS_LABELS.last_name}
-          </label>
-          <input id={FORM_FIELDS.last_name} type="text" className="validate" />
-        </div>
-        <div className="input-field col s6"></div>
-      </div>
+      <InputField
+        name={FORM_FIELDS.last_name}
+        label={FORM_FIELDS_LABELS.last_name}
+        control={control}
+      />
 
-      <div className="row">
-        <div className="input-field col s6">
-          <label htmlFor={FORM_FIELDS.email} className="active">
-            {FORM_FIELDS_LABELS.email}
-          </label>
-          <input id={FORM_FIELDS.email} type="email" className="validate" />
-        </div>
-        <div className="input-field col s6"></div>
-      </div>
+      <InputField
+        name={FORM_FIELDS.email}
+        label={FORM_FIELDS_LABELS.email}
+        control={control}
+      />
 
-      <div className="row">
-        <div className="input-field col s6">
-          <label htmlFor={FORM_FIELDS.telephone} className="active">
-            {FORM_FIELDS_LABELS.telephone}
-          </label>
-          <input id={FORM_FIELDS.telephone} type="tel" className="validate" />
-        </div>
-        <div className="input-field col s6"></div>
-      </div>
+      <InputField
+        name={FORM_FIELDS.telephone}
+        label={FORM_FIELDS_LABELS.telephone}
+        control={control}
+      />
 
       <button type="submit" className="waves-effect waves-light btn">
         Submit
