@@ -1,9 +1,9 @@
-import { Control, Controller, FieldValues, Path } from "react-hook-form";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { Input, InputProps } from "./input";
 
 type InputFieldProps<T extends FieldValues = FieldValues> = InputProps & {
   name: Path<T>;
-  control: Control<T>;
+  control?: Control<T>;
 };
 
 export function InputField<T extends FieldValues = FieldValues>({
@@ -11,11 +11,7 @@ export function InputField<T extends FieldValues = FieldValues>({
   control,
   ...props
 }: InputFieldProps<T>): JSX.Element {
-  return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field }) => <Input {...field} {...props} />}
-    />
-  );
+  const { field } = useController({ name, control });
+
+  return <Input {...field} {...props} />;
 }
