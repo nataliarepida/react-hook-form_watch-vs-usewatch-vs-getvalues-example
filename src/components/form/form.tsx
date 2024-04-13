@@ -8,6 +8,9 @@ import {
 } from "./constants";
 import { FormValues } from "./types";
 import { InputField } from "components/input-field";
+import { ComponentWithGetValues } from "components/component-with-get-values";
+import { ComponentWithUseWatch } from "components/component-with-use-watch";
+import { ComponentWithWatch } from "components/component-with-watch";
 
 const schema = yup
   .object()
@@ -20,7 +23,7 @@ const schema = yup
   .required();
 
 function Form(): JSX.Element {
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit, getValues, watch } = useForm<FormValues>({
     defaultValues: FORM_INITIAL_VALUES,
     resolver: yupResolver(schema),
   });
@@ -52,6 +55,12 @@ function Form(): JSX.Element {
         label={FORM_FIELDS_LABELS.telephone}
         control={control}
       />
+
+      <ComponentWithWatch watch={watch} />
+
+      <ComponentWithUseWatch control={control} />
+
+      <ComponentWithGetValues getValues={getValues} />
 
       <button type="submit" className="waves-effect waves-light btn">
         Submit
