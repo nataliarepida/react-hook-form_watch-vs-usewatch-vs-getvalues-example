@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import {
   FORM_FIELDS,
   FORM_FIELDS_LABELS,
@@ -7,13 +9,26 @@ import {
 import { FormValues } from "./types";
 import { InputField } from "components/input-field";
 
+const schema = yup
+  .object()
+  .shape({
+    [FORM_FIELDS.first_name]: yup.string().required().defined(),
+    [FORM_FIELDS.last_name]: yup.string().defined(),
+    [FORM_FIELDS.country]: yup.string().defined(),
+    [FORM_FIELDS.telephone]: yup.string().defined(),
+  })
+  .required();
+
 function Form(): JSX.Element {
-  const { control } = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: FORM_INITIAL_VALUES,
+    resolver: yupResolver(schema),
   });
 
+  const onSubmit = (data: FormValues) => console.log("submit", data);
+
   return (
-    <form className="col s12">
+    <form className="col s12" onSubmit={handleSubmit(onSubmit)}>
       <InputField
         name={FORM_FIELDS.first_name}
         label={FORM_FIELDS_LABELS.first_name}
@@ -27,8 +42,8 @@ function Form(): JSX.Element {
       />
 
       <InputField
-        name={FORM_FIELDS.email}
-        label={FORM_FIELDS_LABELS.email}
+        name={FORM_FIELDS.country}
+        label={FORM_FIELDS_LABELS.country}
         control={control}
       />
 

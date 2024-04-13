@@ -9,9 +9,21 @@ type InputFieldProps<T extends FieldValues = FieldValues> = InputProps & {
 export function InputField<T extends FieldValues = FieldValues>({
   name,
   control,
+  required,
   ...props
 }: InputFieldProps<T>): JSX.Element {
-  const { field } = useController({ name, control });
+  const {
+    field,
+    fieldState: { invalid, error },
+  } = useController({ name, control, rules: { required } });
 
-  return <Input {...field} {...props} />;
+  return (
+    <Input
+      {...field}
+      {...props}
+      invalid={invalid}
+      required={required}
+      error={error?.message}
+    />
+  );
 }
